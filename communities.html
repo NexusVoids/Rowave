@@ -124,7 +124,7 @@
     /* Groups Grid */
     .groups-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
     }
 
@@ -137,6 +137,8 @@
       transition: all 0.2s ease;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      text-align: center;
       gap: 16px;
     }
 
@@ -145,22 +147,13 @@
       transform: translateY(-2px);
     }
 
-    .group-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .group-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--radius-md);
+    .group-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
       background: rgba(0, 240, 255, 0.1);
-      color: var(--accent);
-      display: grid;
-      place-items: center;
-      font-weight: bold;
-      font-family: var(--font-display);
+      border: 2px solid var(--border);
     }
 
     .group-name {
@@ -169,9 +162,28 @@
       font-weight: 700;
     }
 
-    .group-members {
-      font-size: 13px;
-      color: var(--text-dim);
+    /* Create Organization Card Style */
+    .create-card {
+      border: 2px dashed var(--border);
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      min-height: 200px;
+    }
+
+    .create-card:hover {
+      border-color: var(--accent);
+      background: rgba(0, 240, 255, 0.02);
+    }
+
+    .create-icon {
+      font-size: 32px;
+      color: var(--accent);
+      margin-bottom: 8px;
     }
 
     .btn {
@@ -189,6 +201,7 @@
       box-shadow: 0 0 12px var(--accent-glow);
       text-decoration: none;
       transition: all 0.2s ease;
+      width: 100%;
     }
 
     .btn:hover {
@@ -215,41 +228,26 @@
 
   <!-- Main Content -->
   <main class="container">
-    <h1 class="section-title">Your Roblox Communities</h1>
-    <p class="section-sub">Select a group below to manage ranks, tools, and operations.</p>
+    <h1 class="section-title">Your Communities</h1>
+    <p class="section-sub">Manage your verified organizations and groups below.</p>
 
-    <div class="groups-grid">
-      <!-- Example Group Card 1 -->
-      <div class="group-card">
-        <div class="group-header">
-          <div class="group-avatar">RW</div>
-          <div>
-            <div class="group-name">RoWave Development</div>
-            <div class="group-members">1,420 Members • Owner</div>
-          </div>
-        </div>
-        <a href="#" class="btn">Manage Group</a>
-      </div>
+    <!-- Dynamic Grid of Real Communities + Create Organization Card -->
+    <div class="groups-grid" id="groupsGrid">
+      <!-- Communities will be injected dynamically via JavaScript -->
 
-      <!-- Example Group Card 2 -->
-      <div class="group-card">
-        <div class="group-header">
-          <div class="group-avatar" style="background: rgba(120,0,255,0.1); color: #b180ff;">SF</div>
-          <div>
-            <div class="group-name">Surfer Cafe & Resort</div>
-            <div class="group-members">8,950 Members • Administrator</div>
-          </div>
-        </div>
-        <a href="#" class="btn">Manage Group</a>
+      <!-- Create Organization Card -->
+      <div class="group-card create-card" id="createOrgBtn">
+        <div class="create-icon">+</div>
+        <div class="group-name">Create Organization</div>
+        <p style="font-size: 12px; color: var(--text-dim); margin-bottom: 8px;">Launch a new group hub</p>
       </div>
     </div>
   </main>
 
   <script>
-    // Check if user is logged in using localStorage from login.html
+    // 1. Session Validation
     const savedUser = localStorage.getItem("rowave_user");
     if (!savedUser) {
-      // If not logged in, kick them back to login page
       window.location.href = "login.html";
     } else {
       const userObj = JSON.parse(savedUser);
@@ -260,6 +258,48 @@
     document.getElementById("logoutBtn").addEventListener("click", () => {
       localStorage.removeItem("rowave_user");
       window.location.href = "login.html";
+    });
+
+    // 2. Load Real/Saved User Communities (No Templates)
+    const grid = document.getElementById("groupsGrid");
+    const createCard = document.getElementById("createOrgBtn");
+
+    // Fetch stored user organizations or initialize empty array
+    let userCommunities = JSON.parse(localStorage.getItem("rowave_user_orgs")) || [];
+
+    function renderCommunities() {
+      // Remove existing dynamic community cards (keeping the create card)
+      document.querySelectorAll(".dynamic-group-card").forEach(el => el.remove());
+
+      if (userCommunities.length === 0) {
+        // If user has no organizations yet, they can create one using the card
+      }
+
+      userCommunities.forEach((org, index) => {
+        const card = document.createElement("div");
+        card.className = "group-card dynamic-group-card";
+        card.innerHTML = `
+          <img src="${org.logoUrl || 'https://via.placeholder.com/72'}" alt="${org.name}" class="group-logo">
+          <div class="group-name">${org.name}</div>
+          <a href="manage.html?id=${index}" class="btn">Manage Hub</a>
+        `;
+        // Insert right before the create card
+        grid.insertBefore(card, createCard);
+      });
+    }
+
+    renderCommunities();
+
+    // 3. Handle Create Organization Action
+    createCard.addEventListener("click", () => {
+      const orgName = prompt("Enter your new organization or Roblox group name:");
+      if (orgName && orgName.trim() !== "") {
+        const logoUrl = prompt("Enter image URL for your community logo (or leave blank for default):") || "https://via.placeholder.com/72";
+        
+        userCommunities.push({ name: orgName.trim(), logoUrl: logoUrl });
+        localStorage.setItem("rowave_user_orgs", JSON.stringify(userCommunities));
+        renderCommunities();
+      }
     });
   </script>
 
