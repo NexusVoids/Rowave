@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoWave - Modern Roblox Community & Management Platform</title>
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Global Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .landing-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .brand-logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero {
+      max-width: 900px;
+      margin: 80px auto 100px;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: clamp(16px, 2vw, 18px);
+      color: var(--text-dim);
+      max-width: 640px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto 100px;
+      padding: 0 20px;
+    }
+
+    .feature-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+    }
+
+    .feature-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .feature-card h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      color: var(--text-dim);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 32px 20px;
+      text-align: center;
+      color: var(--text-faint);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Lighting Effects -->
+  <div class="bg-layer">
+    <div class="bg-grid"></div>
+    <div class="bg-glow-primary"></div>
+    <div class="bg-glow-secondary"></div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="landing-nav">
+    <a href="index.html" class="brand-logo">RoWave</a>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-secondary btn-sm">Log In</a>
+      <a href="communities.html" class="btn btn-primary btn-sm">Open App</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span>⚡ Next-Generation Roblox Group Tooling</span>
+    </div>
+    <h1>Powering Next-Level Roblox Communities</h1>
+    <p>Seamlessly manage your Roblox groups, staff ranks, automated operations, and community workflows from a single unified dashboard.</p>
+    <div class="hero-buttons">
+      <a href="communities.html" class="btn btn-primary" style="padding: 12px 28px; font-size: 15px;">Get Started Free</a>
+      <a href="login.html" class="btn btn-secondary" style="padding: 12px 28px; font-size: 15px;">Account Login</a>
+    </div>
+  </section>
+
+  <!-- Feature Cards Grid -->
+  <section class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100-8 4 4 0 000 8z"/></svg>
+      </div>
+      <h3>Multi-Group Management</h3>
+      <p>Connect and oversee all your Roblox groups from one dashboard with granular permissions and live stats.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <h3>Automated Operations</h3>
+      <p>Streamline ranking, moderation actions, and member verification without friction or complex setup.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+      </div>
+      <h3>Secure Authentication</h3>
+      <p>Built with modern web standards to ensure your group data and developer permissions stay protected.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 RoWave. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
