@@ -1,304 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - RoWave</title>
-
-  <!-- Typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg-dark: #07090e;
-      --panel: rgba(18, 22, 31, 0.75);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #f0f4f8;
-      --text-dim: #94a3b8;
-      --accent: #00f0ff;
-      --accent-glow: rgba(0, 240, 255, 0.25);
-      --warn: #ffb454;
-      --success: #00ffa3;
-      --font-display: 'Sora', sans-serif;
-      --font-body: 'Inter', sans-serif;
-      --radius-md: 10px;
-      --radius-lg: 16px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text);
-      font-family: var(--font-body);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      overflow: hidden;
-    }
-
-    /* Background Effects */
-    .bg-layer {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .bg-grid {
-      position: absolute;
-      inset: 0;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 32px 32px;
-    }
-
-    .bg-glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 45vw;
-      height: 45vw;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 70%);
-    }
-
-    .login-card {
-      width: 100%;
-      max-width: 440px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 40px 32px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-      text-align: center;
-    }
-
-    .brand-title {
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      letter-spacing: -0.5px;
-    }
-
-    .brand-sub {
-      color: var(--text-dim);
-      font-size: 14px;
-      margin-bottom: 32px;
-    }
-
-    .step-box {
-      display: none;
-      flex-direction: column;
-      gap: 16px;
-      text-align: left;
-    }
-
-    .step-box.active {
-      display: flex;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .input-group label {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-dim);
-    }
-
-    .input-group input {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 10px 14px;
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s ease;
-    }
-
-    .input-group input:focus {
-      border-color: var(--accent);
-    }
-
-    .code-display {
-      background: rgba(0, 240, 255, 0.05);
-      border: 1px dashed var(--accent);
-      padding: 12px;
-      border-radius: var(--radius-md);
-      font-family: monospace;
-      font-size: 14px;
-      color: var(--accent);
-      text-align: center;
-      word-break: break-all;
-    }
-
-    .instructions {
-      font-size: 13px;
-      color: var(--text-dim);
-      line-height: 1.5;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-family: var(--font-body);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 12px;
-      border-radius: var(--radius-md);
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      width: 100%;
-      background: var(--accent);
-      color: #050811;
-      box-shadow: 0 0 15px var(--accent-glow);
-    }
-
-    .btn:hover {
-      filter: brightness(1.1);
-      box-shadow: 0 0 25px var(--accent-glow);
-    }
-
-    .back-home {
-      display: inline-block;
-      margin-top: 20px;
-      font-size: 13px;
-      color: var(--text-dim);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .back-home:hover {
-      color: var(--text);
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Background Lighting Effects -->
-  <div class="bg-layer">
-    <div class="bg-grid"></div>
-    <div class="bg-glow"></div>
-  </div>
-
-  <div class="login-card">
-    <h1 class="brand-title">Roblox Verification</h1>
-    <p class="brand-sub">Verify ownership of your Roblox account</p>
-
-    <!-- STEP 1: Enter Username -->
-    <div class="step-box active" id="step1">
-      <div class="input-group">
-        <label for="username">Enter your Roblox Username</label>
-        <input type="text" id="username" placeholder="e.g. BuilderDeveloper" required>
-      </div>
-      <button type="button" class="btn" id="nextBtn">Next: Get Verification Code</button>
-    </div>
-
-    <!-- STEP 2: Put Code in Bio & Check -->
-    <div class="step-box" id="step2">
-      <p class="instructions">Paste the following sentence into your <strong>Roblox Profile Bio</strong>, then click check below:</p>
-      <div class="code-display" id="verificationCode">RoWave-Verify-9482</div>
-      <button type="button" class="btn" id="verifyBtn">Check My Bio & Log In</button>
-      <button type="button" class="back-home" id="backBtn" style="margin-top: 0; background:none; border:none; color:var(--text-dim); cursor:pointer;">&larr; Change Username</button>
-    </div>
-
-    <div>
-      <a href="index.html" class="back-home">&larr; Back to Home</a>
-    </div>
-  </div>
-
-  <script>
-    const randomPhrases = [
-      "RoWave-Secure-Login-",
-      "Connecting-To-RoWave-",
-      "Authorizing-Roblox-Account-"
-    ];
-
-    let generatedPhrase = "";
-    let enteredUsername = "";
-
-    const step1 = document.getElementById("step1");
-    const step2 = document.getElementById("step2");
-    const nextBtn = document.getElementById("nextBtn");
-    const verifyBtn = document.getElementById("verifyBtn");
-    const backBtn = document.getElementById("backBtn");
-    const usernameInput = document.getElementById("username");
-    const codeDisplay = document.getElementById("verificationCode");
-
-    // Step 1 -> Step 2
-    nextBtn.addEventListener("click", () => {
-      enteredUsername = usernameInput.value.trim();
-      if (!enteredUsername) {
-        alert("Please enter a valid username.");
-        return;
-      }
-      
-      // Generate unique random string
-      const randomNum = Math.floor(1000 + Math.random() * 9000);
-      const prefix = randomPhrases[Math.floor(Math.random() * randomPhrases.length)];
-      generatedPhrase = prefix + randomNum;
-      
-      codeDisplay.textContent = generatedPhrase;
-
-      step1.classList.remove("active");
-      step2.classList.add("active");
+verifyBtn.addEventListener("click", async () => {
+  verifyBtn.textContent = "Checking Roblox Bio...";
+  
+  try {
+    // Send a request to your Node.js backend server
+    const response = await fetch('http://localhost:3000/api/verify-roblox', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: enteredUsername,
+        expectedCode: generatedPhrase
+      })
     });
 
-    // Go back to step 1
-    backBtn.addEventListener("click", () => {
-      step2.classList.remove("active");
-      step1.classList.add("active");
-    });
+    const data = await response.json();
 
-    // Step 2: Check Bio (Simulated for frontend, or ready for backend API endpoint)
-    verifyBtn.addEventListener("click", () => {
-      verifyBtn.textContent = "Checking Roblox Profile...";
-      
-      // NOTE: In a full production deployment, you would fetch Roblox's profile endpoint via a backend server 
-      // to check if user's bio contains `generatedPhrase`. For local frontend demo storage, we simulate success:
-      setTimeout(() => {
-        // Save user data in browser localStorage so they stay remembered across pages!
-        localStorage.setItem("rowave_user", JSON.stringify({
-          username: enteredUsername,
-          verifiedAt: new Date().toISOString()
-        }));
+    if (data.success) {
+      // Save user session in browser
+      localStorage.setItem("rowave_user", JSON.stringify({
+        username: data.username,
+        userId: data.userId,
+        verifiedAt: new Date().toISOString()
+      }));
 
-        alert(`Success! Verified account: ${enteredUsername}`);
-        window.location.href = "communities.html";
-      }, 1200);
-    });
-
-    // Check if user is already remembered in the browser on page load
-    window.addEventListener("DOMContentLoaded", () => {
-      const savedUser = localStorage.getItem("rowave_user");
-      if (savedUser) {
-        const userObj = JSON.parse(savedUser);
-        // If they are already logged in, you can optionally redirect them directly:
-        // window.location.href = "communities.html";
-      }
-    });
-  </script>
-</body>
-</html>
+      alert(`Success! Verified account: ${data.username}`);
+      window.location.href = "communities.html";
+    } else {
+      // If the bio doesn't match, it stops them here!
+      alert(data.message || "Verification failed. Make sure the code is in your Roblox bio!");
+      verifyBtn.textContent = "Check My Bio & Log In";
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Could not connect to the verification server. Make sure your Node.js server is running!");
+    verifyBtn.textContent = "Check My Bio & Log In";
+  }
+});
